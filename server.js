@@ -39,6 +39,10 @@ inquirer
       addDepartment();
    } else if (response.question == 'Add a Role'){
       addRole();
+   } else if (response.question == 'Add an Employee') {
+      addEmployee();
+   } else if (response.question == 'Update an Employee Role') {
+      updateEmployee();
    }
   
 })
@@ -127,6 +131,87 @@ function addRole(){
 
   })
 }
+
+function addEmployee(){
+
+  inquirer.prompt([
+    {
+      type: "text",
+      message: "Enter first name of employee:",
+      name: "fname"
+    },
+    {
+      type: "text",
+      message: "Enter last name of employee:",
+      name: "lname"
+    },
+    {
+      type: "text",
+      message: "Who is the employee's manager?",
+      name: "manager"
+    },
+    {
+      type: "text",
+      message: "What is the employee's job title?",
+      name: "title"
+    },
+    {
+      type: "text",
+      message: "What is the employee's salary? (No commas)",
+      name: "salary"
+    },
+    {
+      type: "text",
+      message: "What is the employee's role ID?",
+      name: "roleID"
+    },
+    {
+      type: "text",
+      message: "What is the employee's department ID?",
+      name: "depID"
+    }
+  ])
+  .then ((response) => {
+
+    db.connect(function(err) {
+      if (err) return err;
+      var sql = `INSERT INTO employees (first_name, last_name, manager, title, salary, role_id, department_id) VALUES ("${response.fname}", "${response.lname}", "${response.manager}", "${response.title}", "${response.salary}", "${response.roleID}", "${response.depID}")`
+      db.query(sql, function (err, result){
+        if (err) return err;
+        console.log("Data added!");
+      })
+    })
+
+  })
+}
+
+function updateEmployee(){
+  
+  inquirer.prompt([
+    {
+      type: "text",
+      message: "Enter the employee's current role:",
+      name: "currentrole"
+    },
+    {
+      type: "text",
+      message: "Enter the employee's updated role:",
+      name: "updatedrole"
+    }
+  ])
+  .then((response) => {
+
+  db.connect(function(err) {
+    if (err) return err;
+    var sql = `UPDATE employees SET role = '${response.updatedrole}' WHERE role = '${currentrole}'`
+    db.query(sql, function (err, result){
+       if (err) return err;
+       console.log("Data updated!");
+      })
+    })
+  })
+
+};
 
 app.listen(PORT, () =>
   console.log(`listening at localhost:${PORT}`)
