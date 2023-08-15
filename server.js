@@ -35,6 +35,10 @@ inquirer
       viewallRoles();
    } else if (response.question == 'View All Employees'){
     viewallEmployees();
+   } else if (response.question == 'Add a Department'){
+      addDepartment();
+   } else if (response.question == 'Add a Role'){
+      addRole();
    }
   
 })
@@ -69,7 +73,60 @@ function viewallEmployees(){
   })
 };
 
+function addDepartment(){
 
+  inquirer.prompt([{
+    type: 'text',
+    message: 'What is the department name?',
+    name: 'depName',
+   }]) 
+
+   .then((response) => {
+
+    db.connect(function(err) {
+      if (err) return err;
+      var sql = `INSERT INTO departments (department) VALUES ("${response.depName}")`
+      db.query(sql, function (err, result){
+        if (err) return err;
+        console.log("Data added!");
+      })
+    })
+
+   });
+};
+
+function addRole(){
+
+  inquirer.prompt([
+    {
+      type: "text",
+      message: "What is the name of the job title?",
+      name: "title"
+    },
+    {
+      type: "text",
+      message: "What is the salary of this role? (No commas)",
+      name: "salary"
+    },
+    {
+      type: "text",
+      message: "What is the department ID of this role? (Numbers only)",
+      name: "depID"
+    },
+  ])
+  .then((response) => {
+
+    db.connect(function(err) {
+      if (err) return err;
+      var sql = `INSERT INTO roles (title, salary, department_id) VALUES ("${response.title}", "${response.salary}", "${response.depID}")`
+      db.query(sql, function (err, result){
+        if (err) return err;
+        console.log("Data added!");
+      })
+    })
+
+  })
+}
 
 app.listen(PORT, () =>
   console.log(`listening at localhost:${PORT}`)
