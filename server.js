@@ -40,21 +40,33 @@ inquirer
 })
 
 function viewallDepartments(){
-  db.query('SELECT * FROM departments', (results) =>
-    console.table(results)
-  )
+  db.connect(function(err) {
+    if (err) return err;
+    db.query("SELECT * FROM departments", function (err, result){
+      if (err) return err;
+      console.table(result);
+    })
+  })
 };
 
 function viewallRoles(){
-  db.query('SELECT * FROM roles', (results) =>
-  console.table(results)
-)
+  db.connect(function(err) {
+    if (err) return err;
+    db.query("SELECT * FROM roles", function (err, result){
+      if (err) return err;
+      console.table(result);
+    })
+  })
 };
 
 function viewallEmployees(){
-  db.query('SELECT * FROM employees', (results) =>
-  console.table(results)
-  )
+  db.connect(function(err) {
+    if (err) return err;
+    db.query("SELECT * FROM employees", function (err, result){
+      if (err) return err;
+      console.table(result);
+    })
+  })
 };
 
 

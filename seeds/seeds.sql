@@ -1,5 +1,6 @@
 
-INSERT INTO departments (department_id, department)
+
+INSERT INTO departments (id, department)
 VALUES (1, "Marketing"),
        (2, "Legal"),
        (3, "Sales"),
