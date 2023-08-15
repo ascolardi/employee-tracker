@@ -175,10 +175,10 @@ function addEmployee(){
 
     db.connect(function(err) {
       if (err) return err;
-      var sql = `INSERT INTO employees (first_name, last_name, manager, title, salary, role_id, department_id) VALUES ("${response.fname}", "${response.lname}", "${response.manager}", "${response.title}", "${response.salary}", "${response.roleID}", "${response.depID}")`
+      var sql = `INSERT INTO employees (first_name, last_name, manager, title, salary, role_id, department_id) VALUES ("${response.fname}", "${response.lname}", "${response.manager}", "${response.title}", "${response.salary}", "${response.roleID}", "${response.depID}")`;
       db.query(sql, function (err, result){
         if (err) return err;
-        console.log("Data added!");
+        console.log("Data changed!");
       })
     })
 
@@ -203,7 +203,7 @@ function updateEmployee(){
 
   db.connect(function(err) {
     if (err) return err;
-    var sql = `UPDATE employees SET role = '${response.updatedrole}' WHERE role = '${currentrole}'`
+    var sql = `UPDATE employees SET role = '${response.updatedrole}' WHERE role = '${response.currentrole}'`
     db.query(sql, function (err, result){
        if (err) return err;
        console.log("Data updated!");
